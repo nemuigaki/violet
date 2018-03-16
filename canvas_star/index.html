@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+        <title>Canvas</title>
+        <style>
+            body{
+                padding:0;
+                margin:0;
+            }
+            .canvas{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: block;
+                background-color: #000;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas1" class="canvas"></canvas>
+        <img id="img1" src="star-back1.jpg" />
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            var width = 0;
+            var height = 0;
+            var canvas = document.getElementById('canvas1');
+            var ctx = canvas.getContext('2d');
+            var starOpcity = 0; // 星星全局透明度
+            var stars = []; // 所有的星星
+            var imgBack=document.getElementById("img1");
+            $(function(){
+               $(window).on('resize', function(e){
+                   height = this.innerHeight;
+                   width = this.innerWidth;
+                   canvas.width = width;
+                   canvas.height = height;
+               }).resize();
+
+               initStart(500);
+                animate();
+            });
+
+            // 初始化星星对象 和 其他一些canvas设置
+            function initStart(num) {
+                ctx.lineCap = 'round';
+
+                for(var i=0; i<num; i++) {
+                    stars.push({
+                        r: random(Math.min(width, height) * 0.8, Math.sqrt(Math.pow(width,2) + Math.pow(height, 2))), // 星轨半径(圆心距离) Math.sqrt(Math.pow(width,2) + Math.pow(height, 2))
+                        a: random(0, 0.5),  // 起始弧度
+                        m: 0,   // 当前偏移弧度
+                        w: random(0.5, 1),     // 星星本身的半径
+                        pin: 0, // 开始运行的前50帧
+                        color: getColor(),  // 星星的颜色
+                    });
+                }
+                console.log('总数：', stars.length);
+            }
+
+            // 获取随机颜色，少数星星可以有特殊颜色
+            function getColor() {
+                return Math.random() < 0.95 ?
+                    `rgba(220,220,255, ${random(0.1, 0.6)})` :
+                    `rgba(${Math.round(random(50, 255))}, ${Math.round(random(50, 255))}, ${Math.round(random(50, 255))}, 0.8)`;
+            }
+
+            // 获取范围随机数
+            function random(min, max) {
+                return Math.random() * ( max - min ) + min;
+            }
+
+            // 绘制一帧
+            function drow() {
+                //ctx.fillStyle = 'rgb(0,0,0)';
+                //ctx.fillRect(0,0,width,height);
+                ctx.drawImage(imgBack, 0, 0, width, height);
+                if (starOpcity < 1) {
+                    starOpcity+=0.01;
+                }
+               // console.log(starOpcity);
+               ctx.globalAlpha = starOpcity;
+                for(let i=0; i < stars.length; i++) {
+                    const t = stars[i];
+
+                    ctx.fillStyle = t.color;
+
+                    ctx.beginPath();
+                    ctx.arc(width - Math.sin((t.a  - t.m )*Math.PI) * t.r, height - Math.cos((t.a  - t.m )*Math.PI) * t.r, t.w, 0 , Math.PI*2);
+                    ctx.fill();
+
+                    if (starOpcity >= 1) {
+                        if (t.pin < 0.003){
+                            t.pin+=0.0001;
+                        }
+                        for(let j=0.0001; j< t.pin && j<=0.003; j+=0.0001) {
+                            ctx.save();
+                            ctx.globalAlpha = starOpcity - j/0.003;
+                            ctx.beginPath();
+                            ctx.arc(width - Math.sin((t.a  - t.m + j*3 )*Math.PI) * t.r, height - Math.cos((t.a  - t.m + j*3)*Math.PI) * t.r, t.w, 0 , Math.PI*2);
+                            ctx.fill();
+                            ctx.restore();
+                        }
+
+                        const math = t.a - t.m;
+                        if (math < -0.01) {
+                            t.m = t.a - 0.5;
+                        }
+                        t.m+=0.0002;
+                    }
+                }
+            }
+
+            // 动画函数
+            function animate() {
+                drow();
+                requestAnimationFrame(animate);
+            }
+        </script>
+    </body>
+</html>
