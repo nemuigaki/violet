@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+        <title>Canvas</title>
+        <style>
+            body{
+                padding:0;
+                margin:0;
+            }
+            .letter-page{
+                position: fixed;
+                top:0;
+                left:0;
+                width:100%;
+                height: 100%;
+                overflow: hidden;
+                background-color: rgba(0,0,0,.5);
+                z-index: 2;
+                perspective:600px;
+                -webkit-perspective:600px;
+                -moz-perspective:600px;
+                -ms-perspective:600px;
+                -o-perspective:600px;
+
+            }
+            .letter-page .letter-a{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 50vw;
+                height: 25vw;
+                margin: -12.5vw -25vw;
+                background: #ccc;
+                opacity: 1;
+            }
+            .letter-page .letter-b{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 50vw;
+                height: 25vw;
+                margin: -12.5vw -25vw;
+                transform: rotateX(10deg) rotateY(10deg) rotateZ(20deg);
+                background: #ccc;
+                opacity: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="letter-page" id="letter-page">
+            <div class="letter-a">1</div>
+            <div class="letter-b">2</div>
+        </div>
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/hammer.js/2.0.8/hammer.min.js"></script>
+        <script>
+            var hammerTest = new Hammer(document.getElementById('letter-page'));
+            hammerTest.on('pan panmove swipe swipeup press pressup', function(ev) {
+                console.log(ev);
+            });
+        </script>
+    </body>
+</html>
