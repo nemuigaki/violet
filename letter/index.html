@@ -19,48 +19,192 @@
                 overflow: hidden;
                 background-color: rgba(0,0,0,.5);
                 z-index: 2;
-                perspective:600px;
-                -webkit-perspective:600px;
-                -moz-perspective:600px;
-                -ms-perspective:600px;
-                -o-perspective:600px;
+                cursor: move;
+            }
+            .letter-page>.z{
+                position: absolute;
+                top:0;
+                left:0;
+                width:100%;
+                height: 100%;
+                overflow: hidden;
+                perspective:900px;
+                -webkit-perspective:900px;
+            }
+            .letter-page .letter{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 50vw;
+                height: 25vw;
+                margin: -12.5vw -25vw;
+                background-color: #fff;
+                opacity: 1;
+                border-radius: 4px;
+                //border: solid 8px rgba(255,255,255, .6);
+                transform: rotateX(0) rotateY(0);
+                box-shadow: 0 0 100px rgba(0,0,0,.5);
 
+                transform-style: preserve-3d;
+                -webkit-transform-style: preserve-3d;
+
+                z-index: 10;
+                animation: routers 5s;
+                -webkit-animation: -webkit-routers 5s;
+                animation-iteration-count:infinite;
+                -webkit-animation-iteration-count:infinite;
+                animation-timing-function: linear;
+                -webkit-animation-timing-function: linear;
             }
-            .letter-page .letter-a{
+
+            .letter-page .letter .letter-a{
                 position: absolute;
-                top: 50%;
-                left: 50%;
-                width: 50vw;
-                height: 25vw;
-                margin: -12.5vw -25vw;
-                background: #ccc;
-                opacity: 1;
+                top: 8px;
+                left: 8px;
+                border-radius: 2px;
+                width: calc(100% - 16px);
+                height: calc(100% - 16px);
+                background-color: #fff;
+                background-image: url(violet.jpg);
+                background-size: cover;
+                background-position: top center;
+                z-index:2;
             }
-            .letter-page .letter-b{
+            .letter-page .letter .letter-b{
                 position: absolute;
-                top: 50%;
-                left: 50%;
-                width: 50vw;
-                height: 25vw;
-                margin: -12.5vw -25vw;
-                transform: rotateX(10deg) rotateY(10deg) rotateZ(20deg);
-                background: #ccc;
-                opacity: 1;
+                box-sizing: border-box;
+                padding: 16px;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                transform: rotateY(180deg) translateZ(1px);
+                background-color: #fff;
+                background-image: url(letter.jpg);
+            }
+            .letter-page .letter .letter-b .letter-body{
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                box-sizing: border-box;
+                padding: 16px;
+                border-top: solid 1px #90CEE3;
+                border-bottom: solid 1px  #90CEE3;
+                height: 100%;
+                font-size: 14px;
+                color: #666;
+            }
+            .letter-page .letter .letter-b .letter-body .info{
+                text-align: center;
+                letter-spacing: 2px;
+            }
+            .letter-page .letter .letter-b .letter-body .sender{
+                text-align: right;
             }
         </style>
     </head>
     <body>
         <div class="letter-page" id="letter-page">
-            <div class="letter-a">1</div>
-            <div class="letter-b">2</div>
+            <div class="z" id="z">
+                <div class="letter" id="letter">
+                    <div class="letter-a"></div>
+                    <div class="letter-b">
+                        <div class="letter-body">
+                            <div class="addressee">基尔伯特 · 布甘比利亚：</div>
+                            <div class="info" id="letter-info">我爱你.</div>
+                            <div class="sender">薇尔莉特 · 伊芙加登</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdn.bootcss.com/hammer.js/2.0.8/hammer.min.js"></script>
+        <script src="jquery.mousewheel.min.js"></script>
         <script>
-            var hammerTest = new Hammer(document.getElementById('letter-page'));
-            hammerTest.on('pan panmove swipe swipeup press pressup', function(ev) {
-                console.log(ev);
+            var dom_rotate = [0,0]; // 当前旋转角
+            var $dom = $("#letter");
+            var $letterInfo = $("#letter-info");
+            var stop = false;   // 是否停止自旋转
+            var scoler = 1; // 缩放比例
+            var rotateTimer = null; // 旋转timer
+            var hammerTest = null;
+            $(function() {
+                hammerTest = new Hammer(document.getElementById('letter-page'));
+                hammerTest.get('pan').set({ direction: Hammer.DIRECTION_ALL }); // 开启所有方向的检测
+
+                hammerTest.on('pan panmove swipe swipeup press pressup', function(e) {
+                    switch (e.type) {
+                        case "pan":
+                            onPan(e);
+                    }
+                });
+
+                $('#letter-page').on('mousedown', function() {
+                    clearInterval(rotateTimer);
+                }).on('mouseup', function() {
+                    clearInterval(rotateTimer);
+                    rotateTimer = window.setInterval(autoRotate, 50);
+                }).on('mousewheel');
+                    clearInterval(rotateTimer);
+                    rotateTimer = window.setInterval(autoRotate, 50);
+                }).on('mousewheel', function(event, delta) {	//滚轮滚动
+                console.log(delta);
+                    scoler+=delta*0.1;
+                    if(scoler>1.5){
+                        scoler = 1.5;
+                        return;
+                    }else if(scoler<0.5){
+                        scoler = 0.5;
+                    }
+                    $('#z').css({"transform":"scale("+ scoler +")"});
             });
+
+            // 自动旋转
+            var rotate_v = 0.2;
+            function autoRotate() {
+                if (dom_rotate[1] > 20) {
+                    rotate_v = -0.2;
+                } else if (dom_rotate[1] < -20) {
+                    rotate_v = 0.2;
+                }
+                dom_rotate[1] += rotate_v;
+
+                makeLetter();
+            }
+
+            // 处理移动
+           function onPan(e) {
+              //console.log(`rotateX(${dom_rotate[0] + e.deltaY/100}) rotateY(${dom_rotate[0] + e.deltaX/100})`);
+               dom_rotate[0] -= e.deltaY/100;
+               dom_rotate[1] += e.deltaX/100;
+               if (dom_rotate[0]>30) {
+                   dom_rotate[0] = 30;
+               } else if (dom_rotate[0]<-30) {
+                   dom_rotate[0] = -30;
+               }
+               //console.log(dom_rotate);
+               makeLetter();
+
+               if (dom_rotate[1] > 0) {
+                   $letterInfo.html('后来，我终于明白什么是爱，<br/>可惜你早已远去，消失在人海');
+               } else {
+                   $letterInfo.html('我爱你.');
+               }
+            }
+
+            // 根据当前参数设置信封的旋转状态
+            function makeLetter() {
+                const pi = Math.PI / 180;
+                const op = Math.abs(Math.sin(pi * (dom_rotate[1] + 90))) / 2;
+                const x = - Math.sin(pi * dom_rotate[1]) * 90;
+                const y = Math.sin(pi * dom_rotate[0]) * 90;
+
+                $dom.css("transform", 'rotateX('+ dom_rotate[0] +'deg) rotateY(' + dom_rotate[1] + 'deg)');
+                $dom.css("box-shadow", x + 'px ' + y + 'px ' + '100px rgba(0,0,0,' + op + ')');
+            }
         </script>
     </body>
 </html>
