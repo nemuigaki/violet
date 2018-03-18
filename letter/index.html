@@ -41,7 +41,6 @@
                 background-color: #fff;
                 opacity: 1;
                 border-radius: 4px;
-                //border: solid 8px rgba(255,255,255, .6);
                 transform: rotateX(0) rotateY(0);
                 box-shadow: 0 0 100px rgba(0,0,0,.5);
 
@@ -61,14 +60,57 @@
                 position: absolute;
                 top: 8px;
                 left: 8px;
+                overflow: hidden;
                 border-radius: 2px;
                 width: calc(100% - 16px);
                 height: calc(100% - 16px);
                 background-color: #fff;
-                background-image: url(violet.jpg);
+                background-image: url(violet3.jpg);
                 background-size: cover;
                 background-position: top center;
                 z-index:2;
+            }
+            .letter-page .letter .f1{
+                position: absolute;
+                width: 15%;
+                right: 8.5%;
+                top: 60%;
+                transform: translateZ(15px);
+            }
+            .letter-page .letter .k1{
+                position: absolute;
+                width: 25%;
+                right: 25%;
+                top: 12%;
+                transform: translateZ(20px);
+            }
+            .letter-page .letter .k2{
+                position: absolute;
+                width: 40%;
+                right: 12%;
+                bottom: 15%;
+                transform: translateZ(15px);
+            }
+            .letter-page .letter .k3{
+                position: absolute;
+                width: 20%;
+                right: 10%;
+                bottom: 10%;
+                transform: translateZ(10px);
+            }
+            .letter-page .letter .k4{
+                position: absolute;
+                width: 13%;
+                left: 5%;
+                bottom: 10%;
+                transform: translateZ(15px);
+            }
+            .letter-page .letter .k5{
+                position: absolute;
+                width: 12%;
+                left: 2%;
+                bottom: 10%;
+                transform: translateZ(10px);
             }
             .letter-page .letter .letter-b{
                 position: absolute;
@@ -109,7 +151,15 @@
         <div class="letter-page" id="letter-page">
             <div class="z" id="z">
                 <div class="letter" id="letter">
-                    <div class="letter-a"></div>
+                    <img class="k1" draggable="false" src="k1.png" />
+                    <img class="k2" draggable="false" src="k2.png" />
+                    <img class="k3" draggable="false" src="k3.png" />
+                    <img class="k4" draggable="false" src="k4.png" />
+                    <img class="k5" draggable="false" src="k5.png" />
+                    <div class="letter-a">
+
+
+                    </div>
                     <div class="letter-b">
                         <div class="letter-body">
                             <div class="addressee">基尔伯特 · 布甘比利亚：</div>
