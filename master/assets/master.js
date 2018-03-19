@@ -22,7 +22,7 @@ $(function(){
         windowPie = width/height;
 
         starOpcity = 0;
-        initStart(500);
+        initStart(10000);
     }).resize();
     /** 开始执行loading，等待所有的图片加载完成 **/
     onInit();
@@ -35,7 +35,7 @@ $(function(){
 // 开始加载
 function onInit() {
     loadImg(imgs.starback, loadDown);  // 加载图片
-    initStart(500);    // 创建星星对象
+    initStart(10000);    // 创建星星对象
 }
 
 // 工具 - 加载一张图片
@@ -129,14 +129,14 @@ function drow() {
             if (t.pin < 0.003){
                 t.pin+=0.0001;
             }
-            for(var j=0.0001; j< t.pin && j<=0.003; j+=0.0001) {
-                ctx.save();
-                ctx.globalAlpha = starOpcity - j/0.003;
-                ctx.beginPath();
-                ctx.arc(width - Math.sin((t.a  - t.m + j*3)*Math.PI) * t.r, height - Math.cos((t.a  - t.m + j*3)*Math.PI) * t.r, t.w, 0 , Math.PI*2);
-                ctx.fill();
-                ctx.restore();
-            }
+            // for(var j=0.0001; j< t.pin && j<=0.003; j+=0.0001) {
+            //     ctx.save();
+            //     ctx.globalAlpha = starOpcity - j/0.003;
+            //     ctx.beginPath();
+            //     ctx.arc(width - Math.sin((t.a  - t.m + j*3)*Math.PI) * t.r, height - Math.cos((t.a  - t.m + j*3)*Math.PI) * t.r, t.w, 0 , Math.PI*2);
+            //     ctx.fill();
+            //     ctx.restore();
+            // }
 
             const math = t.a - t.m;
             if (math < -0.01) {
