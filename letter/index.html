@@ -230,10 +230,10 @@
               //console.log(`rotateX(${dom_rotate[0] + e.deltaY/100}) rotateY(${dom_rotate[0] + e.deltaX/100})`);
                dom_rotate[0] -= e.deltaY/100;
                dom_rotate[1] += e.deltaX/100;
-               if (dom_rotate[0]>30) {
-                   dom_rotate[0] = 30;
-               } else if (dom_rotate[0]<-30) {
-                   dom_rotate[0] = -30;
+               if (dom_rotate[0]>15) {
+                   dom_rotate[0] = 15;
+               } else if (dom_rotate[0]<-15) {
+                   dom_rotate[0] = -15;
                }
                //console.log(dom_rotate);
                makeLetter();

@@ -164,23 +164,21 @@ function setStar(i, num) {
     return obj;
 }
 /** 初始化流星对象 **/
+var c = document.createElement('canvas');
+c.width = 300;
+c.height = 5;
+var c_ctx = c.getContext('2d');
+var g = c_ctx.createRadialGradient(100, 1, 0, 200, 1, 125);
+g.addColorStop(0, 'rgb(255,255,255)');
+g.addColorStop(0.2, 'rgb(220,220,255)');
+g.addColorStop(0.9, "transparent");
+
+c_ctx.fillStyle = g;
+
+c_ctx.beginPath();
+c_ctx.fillRect(0,0,300,3);
+met.pic = c;    // 图片对象
 function initMet() {
-    var c = document.createElement('canvas');
-    c.width = 300;
-    c.height = 5;
-    var c_ctx = c.getContext('2d');
-    var g = c_ctx.createRadialGradient(100, 1, 0, 200, 1, 125);
-    g.addColorStop(0, getColor());
-    g.addColorStop(0.2, getColor());
-    g.addColorStop(0.4, getColor());
-    g.addColorStop(0.9, "transparent");
-
-    c_ctx.fillStyle = g;
-
-    c_ctx.beginPath();
-    c_ctx.fillRect(0,0,300,3);
-
-    met.pic = c;    // 图片对象
     var temp_x = random(width*.4, width*1.25); // random(width*.25, width*1);
     met.start = [temp_x, random(height*-.25, height)]; // 随机流星出现位置
     met.deg = random(-Math.PI/180*10, Math.PI/180*10); // random(-Math.PI/180 * 30, Math.PI/180 * 30);  // 旋转角度
@@ -222,10 +220,6 @@ function drow() {
         ctx.restore();
 
         var rand = Math.random();
-        // 有小概率出现流星
-        if((!meteor) && rand>0.999999) {
-            meteor = true;
-        }
 
         // 画流星
         if (meteor) {
@@ -241,8 +235,9 @@ function drow() {
                     met.pin-=0.00002;
                     ctx.op-=0.00002;
                 } else {
-                    initMet();
                     meteor = false;
+                    initMet();
+
                 }
             }
 
@@ -262,6 +257,11 @@ function drow() {
             ctx.restore();
         }
 
+        // 有小概率出现流星
+        if((!meteor) && rand>0.999999) {
+            meteor = true;
+        }
+        // 需要闪烁的星星随机调整亮度
         if(t.f) {
             if (rand > 0.5 && t.o > 0.2) {
                 t.o -= 0.1;
@@ -269,6 +269,7 @@ function drow() {
                 t.o += 0.1;
             }
         }
+        // 旋转到边缘的星星重置位置
         if(now < 0) {
             t.m = t.a - 0.5;
         }
