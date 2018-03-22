@@ -24,7 +24,7 @@ $(function(){
         canvas.height = height;
         windowPie = width/height;
 
-        initStart(3000);
+        initStart(2000);
     }).resize();
     /** 开始执行loading，等待所有的图片加载完成 **/
     onInit();
@@ -37,7 +37,7 @@ $(function(){
 // 开始加载
  function onInit() {
     loadImg(imgs.starback, loadDown);  // 加载图片
-    initStart(3000);    // 创建星星对象
+    initStart(2000);    // 创建星星对象
     initMet();          // 初始化流星参数
 }
 
@@ -182,7 +182,7 @@ c_ctx.beginPath();
 c_ctx.fillRect(0,0,300,3);
 met.pic = c;    // 图片对象
 function initMet() {
-    var temp_x = random(width*.4, width*1.25); // random(width*.25, width*1);
+    var temp_x = random(width*.3, width); // random(width*.25, width*1);
     met.start = [temp_x, random(height*-.25, height)]; // 随机流星出现位置
     met.deg = random(-Math.PI/180*10, Math.PI/180*10); // random(-Math.PI/180 * 30, Math.PI/180 * 30);  // 旋转角度
     met.range = met.start[0] - random(width*.3, width*.8);    // 飞行距离
