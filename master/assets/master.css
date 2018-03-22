@@ -109,3 +109,111 @@ td,th{padding: 0;}
     display: block;
     background-color: #000;
 }
+
+/** logo **/
+.logo-box{
+    position: absolute;
+    top: 50%;
+    left: 4%;
+    width: 35vw;
+    height: 35vw;
+    min-width: 500px;
+    min-height: 500px;
+    transform: translateY(-50%);
+    z-index: 2;
+    color: #f0f0f0;
+    perspective:400px;
+    -webkit-perspective:400px;
+    -moz-perspective:400px;
+}
+.logo-box.show .title{
+    transform: scale(1, 1);
+    opacity: 1;
+}
+.logo-box.show .title-lit{
+    transform: scale(1, 1);
+    opacity: 1;
+}
+.logo-box.show .logo{
+    transform: translateX(0) translateY(0) rotateX(0) rotateY(0) scale(1, 1);
+    opacity: 1;
+}
+.logo-box.show .light1{
+    transform: scale(1, 1) translateX(-10px) translateY(10px);
+    opacity: 1;
+}
+.logo-box.show .light2{
+    transform: scale(1, 1) translateX(3px) translateY(-8px);
+    opacity: 1;
+}
+.logo-box .logo{
+    position: absolute;
+    width: 25%;
+    height: auto;
+    top:50%;
+    left:50%;
+    margin-top: -30%;
+    margin-left: -12.5%;
+    transition: all 8s;
+    -webkit-transition: all 8s;
+    transform: translateX(30px) rotateX(45deg) rotateY(25deg) scale(1.2, 1.2);
+    opacity: 0;
+}
+.logo-box .light1{
+    position: absolute;
+    width: 20%;
+    height: auto;
+    top: 24%;
+    left: 52%;
+    transition: all 3000ms;
+    -webkit-transition: all 3000ms;
+    transition-delay: 3s;
+    -webkit-transition-delay: 3s;
+    transform: scale(.5, .5) translateX(0) translateY(0);
+    opacity: 0;
+}
+.logo-box .light2{
+    position: absolute;
+    width: 12%;
+    height: auto;
+    top: 18%;
+    left: 32%;
+    transition: all 3000ms;
+    -webkit-transition: all 3000ms;
+    transition-delay: 3s;
+    -webkit-transition-delay: 3s;
+    transform: scale(.2, .2) translateX(0) translateY(0);
+    opacity: 0;
+}
+.logo-box .title{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    margin-top: -4%;
+    margin-left: -250px;
+    text-align: center;
+    font-size: 28px;
+    letter-spacing: 16px;
+    text-shadow: 0 0 4px rgb(130,10,225);
+    transition: all 1500ms;
+    -webkit-transition: all 1500ms;
+    transform: scale(1.5, 1.5);
+    opacity: 0;
+}
+.logo-box .title-lit{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    margin-left: -250px;
+    margin-top: 4%;
+    text-align: center;
+    letter-spacing: 16px;
+    font-size: 14px;
+    text-shadow: 0 0 4px rgb(130,10,225);
+    transition: all 2000ms;
+    -webkit-transition: all 2000ms;
+    transform: scale(1.5, 1.5);
+    opacity: 0;
+}

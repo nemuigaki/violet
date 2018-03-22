@@ -68,8 +68,11 @@ $(function(){
  // 页面初始化完毕，页面出现
  function show() {
     animate();
-    $('#loading-info').addClass('hide');
-    $('#loading-box').fadeOut(800);
+     $('#loading-info').addClass('hide');
+     $('#loading-box').fadeOut(800);
+    setTimeout(function(){
+        $('#logo-box').addClass('show');
+    }, 600);
 }
 
  /**
