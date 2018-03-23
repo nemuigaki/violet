@@ -158,7 +158,6 @@
                     <img class="k5" draggable="false" src="k5.png" />
                     <div class="letter-a">
 
-
                     </div>
                     <div class="letter-b">
                         <div class="letter-body">
@@ -197,11 +196,7 @@
                 }).on('mouseup', function() {
                     clearInterval(rotateTimer);
                     rotateTimer = window.setInterval(autoRotate, 50);
-                }).on('mousewheel');
-                    clearInterval(rotateTimer);
-                    rotateTimer = window.setInterval(autoRotate, 50);
                 }).on('mousewheel', function(event, delta) {	//滚轮滚动
-                console.log(delta);
                     scoler+=delta*0.1;
                     if(scoler>1.5){
                         scoler = 1.5;

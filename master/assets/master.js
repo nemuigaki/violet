@@ -15,17 +15,16 @@ var imgs = {
     down: 0,
 };    // 全局 - 所有需异步加载的图片资源
 
-$(function(){
-    // 窗口大小改变时触发
-    $(window).on('resize', function(e){
-        height = this.innerHeight;
-        width = this.innerWidth;
-        canvas.width = width;
-        canvas.height = height;
-        windowPie = width/height;
+/** letter页全局函数 **/
+var dom_rotate = [0,0]; // 当前旋转角
+var $dom = $("#letter");
+var $letterInfo = $("#letter-info");
+var stop = false;   // 是否停止自旋转
+var scoler = 1; // 缩放比例
+var rotateTimer = null; // 旋转timer
+var hammerTest = null;
 
-        initStart(2000);
-    }).resize();
+$(function(){
     /** 开始执行loading，等待所有的图片加载完成 **/
     onInit();
 });
@@ -34,11 +33,64 @@ $(function(){
  * 初始化相关
  * **/
 
-// 开始加载
+/** 初始化加载 **/
  function onInit() {
+    initEvents();   // 初始化各种绑定事件
     loadImg(imgs.starback, loadDown);  // 加载图片
     initStart(2000);    // 创建星星对象
     initMet();          // 初始化流星参数
+}
+
+/** 各种事件初始化 **/
+function initEvents() {
+    /** 窗口大小改变时触发 **/
+    $(window).on('resize', function(){
+        height = this.innerHeight;
+        width = this.innerWidth;
+        canvas.width = width;
+        canvas.height = height;
+        windowPie = width/height;
+        initStart(2000);
+    }).resize();
+
+    /** 信窗口相关事件 **/
+    hammerTest = new Hammer(document.getElementById('letter-page'));
+    hammerTest.get('pan').set({ direction: Hammer.DIRECTION_ALL }); // 开启所有方向的检测
+
+    hammerTest.on('pan panmove swipe swipeup press pressup', function(e) {
+        switch (e.type) {
+            case "pan":
+                onPan(e);
+        }
+    });
+
+    $('#letter-page').on('mousedown touchstart', function() {
+        clearInterval(rotateTimer);
+    }).on('mouseup touchend', function() {
+        clearInterval(rotateTimer);
+        rotateTimer = window.setInterval(autoRotate, 50);
+    }).on('mousewheel', function(event, delta) {	// 滚轮滚动
+        scoler+=delta*0.1;
+        if(scoler>1.5){
+            scoler = 1.5;
+            return;
+        }else if(scoler<0.5){
+            scoler = 0.5;
+        }
+        $('#z').css({"transform":"scale("+ scoler +")"});
+    });
+
+    /** 菜单点击事件 **/
+    $('#to_letter-page').on('click touchend', function(){
+       $(".pages[id!=letter-page]").fadeOut(300);
+       $("#letter-page").fadeIn(300);
+       clearInterval(rotateTimer);
+        rotateTimer = window.setInterval(autoRotate, 50);
+    });
+    $("#to_person-page").on('click touchend', function(){
+        $(".pages[id!=person-page]").fadeOut(300);
+        $("#person-page").fadeIn(300);
+    });
 }
 
  // 工具 - 加载一张图片
@@ -215,8 +267,6 @@ function drow() {
         var now = t.a - t.m;
         ctx.fillStyle = t.color;
 
-
-
         ctx.save();
         ctx.globalAlpha = t.o;
         ctx.drawImage(t.pic, width - Math.sin(now * Math.PI) * t.r,  height - Math.cos(now * Math.PI) * t.r, t.w, t.w);
@@ -284,4 +334,50 @@ function drow() {
 function animate() {
     drow();
     requestAnimationFrame(animate);
+}
+
+/**
+ * letter页相关
+ * **/
+// 自动旋转
+var rotate_v = 0.2;
+function autoRotate() {
+    if (dom_rotate[1] > 20) {
+        rotate_v = -0.2;
+    } else if (dom_rotate[1] < -20) {
+        rotate_v = 0.2;
+    }
+    dom_rotate[1] += rotate_v;
+
+    makeLetter();
+}
+
+// 处理移动
+function onPan(e) {
+    dom_rotate[0] -= e.deltaY/100;
+    dom_rotate[1] += e.deltaX/100;
+    if (dom_rotate[0]>15) {
+        dom_rotate[0] = 15;
+    } else if (dom_rotate[0]<-15) {
+        dom_rotate[0] = -15;
+    }
+
+    makeLetter();
+
+    if (dom_rotate[1] > 0) {
+        $letterInfo.html('后来，我终于明白什么是爱，<br/>可惜你早已远去，消失在人海');
+    } else {
+        $letterInfo.html('我爱你.');
+    }
+}
+
+// 根据当前参数设置信封的旋转状态
+function makeLetter() {
+    const pi = Math.PI / 180;
+    const op = Math.abs(Math.sin(pi * (dom_rotate[1] + 90))) / 2;
+    const x = - Math.sin(pi * dom_rotate[1]) * 90;
+    const y = Math.sin(pi * dom_rotate[0]) * 90;
+
+    $dom.css("transform", 'rotateX('+ dom_rotate[0] +'deg) rotateY(' + dom_rotate[1] + 'deg)');
+    $dom.css("box-shadow", x + 'px ' + y + 'px ' + '100px rgba(100,100,100,' + op + ')');
 }
