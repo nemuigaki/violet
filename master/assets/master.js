@@ -37,7 +37,7 @@ $(function(){
  function onInit() {
     initEvents();   // 初始化各种绑定事件
     loadImg(imgs.starback, loadDown);  // 加载图片
-    initStart(2000);    // 创建星星对象
+    initStart(1800);    // 创建星星对象
     initMet();          // 初始化流星参数
 }
 
@@ -50,7 +50,7 @@ function initEvents() {
         canvas.width = width;
         canvas.height = height;
         windowPie = width/height;
-        initStart(2000);
+        initStart(1800);
     }).resize();
 
     /** 信窗口相关事件 **/
@@ -102,12 +102,8 @@ function initEvents() {
     });
     $('#menu-music').on('click', function(){
         if($('#music-info').data('music') === 'close') {
-            $('#menu-music').addClass('open');
-            $('#music-info').data('music','open').text('播放中');
             onMp3Play();
         } else {
-            $('#menu-music').removeClass('open');
-            $('#music-info').data('music','close').text('已关闭');
             onMp3Pause();
         }
     });
@@ -172,7 +168,7 @@ function initStart(num) {
         var max = Math.sqrt(Math.pow(width,2) + Math.pow(height, 2));
         for(var j=0;j<stars.length;j++) {
             obj = setStar(j, num);
-            stars[j].r = random(max*0.07*grad[Math.round(random(0,grad.length))], max);
+            stars[j].r = random(max*0.08*grad[Math.round(random(0,grad.length))], max);
             stars[j].a = random(0, 0.5);
             stars[j].m = 0;
             stars[j].f = Math.random() > 0.7;
@@ -262,12 +258,11 @@ c_ctx.beginPath();
 c_ctx.fillRect(0,0,300,3);
 met.pic = c;    // 图片对象
 function initMet() {
-    var temp_x = random(width*.3, width); // random(width*.25, width*1);
+    var temp_x = random(width*.3, width*.7); // random(width*.25, width*1);
     met.start = [temp_x, random(height*-.25, height)]; // 随机流星出现位置
     met.deg = random(-Math.PI/180*10, Math.PI/180*10); // random(-Math.PI/180 * 30, Math.PI/180 * 30);  // 旋转角度
     met.range = met.start[0] - random(width*.3, width*.8);    // 飞行距离
     met.leng = random(350, 500);    // 流星完全状态下有多长
-    met.op = 0;     // 当前透明度
     met.pin = 0;  // 前100帧和后100帧, 0~1
     met.sx = -Math.cos(met.deg) * 0.02; // 每次在X上前进的距离
     met.sy = -Math.sin(met.deg) * 0.02; // 每次在Y上前进的距离
@@ -305,16 +300,12 @@ function drow() {
         // 画流星
         if (meteor) {
             if (met.start[0] > met.range) {
-                if (met.pin < 0.8) {
-                    met.pin+=0.00001;
-                    ctx.op+=0.00001;
-                }
+                met.pin = met.pin < .8 ? met.pin+0.00001 : met.pin;
                 met.start[0]+=met.sx;
                 met.start[1]+=met.sy;
             } else {
                 if (met.pin > 0) {
                     met.pin-=0.00002;
-                    ctx.op-=0.00002;
                 } else {
                     meteor = false;
                     initMet();
@@ -323,7 +314,6 @@ function drow() {
             }
 
            ctx.save();
-           ctx.globalAlpha = ctx.op;
            ctx.translate(met.start[0], met.start[1]);
            ctx.rotate(met.deg);
 
@@ -395,7 +385,7 @@ function onPan(e) {
     if (dom_rotate[1] > 0) {
         $letterInfo.html('后来，我终于明白什么是爱，<br/>可惜你早已远去，消失在人海');
     } else {
-        $letterInfo.html('我爱你.');
+        $letterInfo.html('真希望你还活着.');
     }
 }
 
@@ -413,11 +403,15 @@ function makeLetter() {
 /** 音频事件，开始播放 **/
 function onMp3Play() {
     audio1.play();
+    $('#menu-music').addClass('open');
+    $('#music-info').data('music','open').text('播放中');
     volumeUp();
 }
 
 /** 音频事件，暂停播放 **/
 function onMp3Pause() {
+    $('#menu-music').removeClass('open');
+    $('#music-info').data('music','close').text('已关闭');
     volumeDown();
 }
 
