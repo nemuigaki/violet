@@ -1,19 +1,19 @@
 /** 全局函数 **/
-var width = 1;  // 全局 - 窗口宽度
-var height = 1; // 全局 - 窗口高度
+var width = 1;      // 全局 - 窗口宽度
+var height = 1;     // 全局 - 窗口高度
 var windowPie = 1;  // 全局 - 当前工作区宽高比
-
 var canvas = document.getElementById('canvas1');    // 全局 - 主canvas
 var ctx = canvas.getContext('2d');                  // 全局 - 主ctx画笔
-
 var stars = [];     // 全局 - 所有的星星
-var met = {};         // 全局 - 一颗流星
+var met = {};       // 全局 - 一颗流星
 
-var imgs = {
+var imgs = {        // 全局 - 所有需异步加载的图片资源
     starback: { url: 'assets/img/star-back1.jpg', dom: null, width: 1, height: 1, pie: 1},   // url图片URL，图片DOM，图片宽，图片高，图片宽高比
     all: 1,
-    down: 0,
-};    // 全局 - 所有需异步加载的图片资源
+    down: 0
+};
+var audio1 = document.getElementById('audio1');
+var volumeTimer = null; // 音量timer
 
 /** letter页全局函数 **/
 var dom_rotate = [0,0]; // 当前旋转角
@@ -81,27 +81,38 @@ function initEvents() {
     });
 
     /** 菜单点击事件 **/
-    $('#to_letter-page').on('click touchend', function(){
+    $('#to_letter-page').on('click', function(){
        $(".pages[id!=letter-page]").fadeOut(300);
        $("#letter-page").fadeIn(300);
        $("#close").addClass('show');
        clearInterval(rotateTimer);
         rotateTimer = window.setInterval(autoRotate, 50);
     });
-    $("#to_person-page").on('click touchend', function(){
+    $("#to_person-page").on('click', function(){
         clearInterval(rotateTimer);
         $(".pages[id!=person-page]").fadeOut(300);
         $("#person-page").fadeIn(300);
         $("#close").addClass('show');
     });
-    $("#to_copyright-page").on('click touchend', function(){
+    $("#to_copyright-page").on('click', function(){
         clearInterval(rotateTimer);
         $(".pages[id!=copyright-page]").fadeOut(300);
         $("#copyright-page").fadeIn(300);
         $("#close").addClass('show');
     });
+    $('#menu-music').on('click', function(){
+        if($('#music-info').data('music') === 'close') {
+            $('#menu-music').addClass('open');
+            $('#music-info').data('music','open').text('播放中');
+            onMp3Play();
+        } else {
+            $('#menu-music').removeClass('open');
+            $('#music-info').data('music','close').text('已关闭');
+            onMp3Pause();
+        }
+    });
     /** close按钮事件 **/
-    $("#close").on('click touchend', function(){
+    $("#close").on('click', function(){
         clearInterval(rotateTimer);
         $(".pages").fadeOut(300);
         $("#close").removeClass('show');
@@ -138,6 +149,7 @@ function initEvents() {
      $('#loading-info').addClass('hide');
      $('#loading-box').fadeOut(800);
      $('#menu').animate({opacity: 'show', left: 0}, 600);
+     onMp3Play();
     setTimeout(function(){
         $('#logo-box').addClass('show');
     }, 600);
@@ -396,4 +408,34 @@ function makeLetter() {
 
     $dom.css("transform", 'rotateX('+ dom_rotate[0] +'deg) rotateY(' + dom_rotate[1] + 'deg)');
     $dom.css("box-shadow", x + 'px ' + y + 'px ' + '100px rgba(100,100,100,' + op + ')');
+}
+
+/** 音频事件，开始播放 **/
+function onMp3Play() {
+    audio1.play();
+    volumeUp();
+}
+
+/** 音频事件，暂停播放 **/
+function onMp3Pause() {
+    volumeDown();
+}
+
+/** 音频音量调大 **/
+function volumeUp() {
+    clearTimeout(this.volumeTimer);
+    if (audio1.volume + 0.1 <= 1) {
+        audio1.volume += 0.1;
+        this.volumeTimer = setTimeout(volumeUp, 200);
+    }
+}
+/** 音频音量调小 **/
+function volumeDown() {
+    clearTimeout(this.volumeTimer);
+    if (audio1.volume - 0.1 >= 0) {
+        audio1.volume -= 0.1;
+        volumeTimer = setTimeout(volumeDown, 200);
+    } else {
+        audio1.pause();
+    }
 }

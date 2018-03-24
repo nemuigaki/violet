@@ -16,6 +16,7 @@
     </div>
 </div>
 <div class="boss">
+    <audio id="audio1" src="assets/b.mp3" loop preload></audio>
     <canvas id="canvas1" class="canvas"></canvas>
     <div id="logo-box" class="logo-box">
         <img class="logo" src="assets/img/logo4.png" />
@@ -37,9 +38,9 @@
             <div class="icon"><img src="assets/img/menu-icon3.png" /></div>
             <div class="info">版权声明</div>
         </li>
-        <li id="menu-music">
+        <li id="menu-music" class="menu-music">
             <div class="icon"><img src="assets/img/menu-icon4.png" /></div>
-            <div class="info">音乐/开</div>
+            <div class="info">音乐/<span id="music-info" data-music="close">已关闭</span></div>
         </li>
     </ul>
     <div id="close" class="close">
