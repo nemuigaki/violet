@@ -84,12 +84,27 @@ function initEvents() {
     $('#to_letter-page').on('click touchend', function(){
        $(".pages[id!=letter-page]").fadeOut(300);
        $("#letter-page").fadeIn(300);
+       $("#close").addClass('show');
        clearInterval(rotateTimer);
         rotateTimer = window.setInterval(autoRotate, 50);
     });
     $("#to_person-page").on('click touchend', function(){
+        clearInterval(rotateTimer);
         $(".pages[id!=person-page]").fadeOut(300);
         $("#person-page").fadeIn(300);
+        $("#close").addClass('show');
+    });
+    $("#to_copyright-page").on('click touchend', function(){
+        clearInterval(rotateTimer);
+        $(".pages[id!=copyright-page]").fadeOut(300);
+        $("#copyright-page").fadeIn(300);
+        $("#close").addClass('show');
+    });
+    /** close按钮事件 **/
+    $("#close").on('click touchend', function(){
+        clearInterval(rotateTimer);
+        $(".pages").fadeOut(300);
+        $("#close").removeClass('show');
     });
 }
 
@@ -122,6 +137,7 @@ function initEvents() {
     animate();
      $('#loading-info').addClass('hide');
      $('#loading-box').fadeOut(800);
+     $('#menu').animate({opacity: 'show', left: 0}, 600);
     setTimeout(function(){
         $('#logo-box').addClass('show');
     }, 600);

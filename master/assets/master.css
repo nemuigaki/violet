@@ -240,9 +240,10 @@ td,th{padding: 0;}
 .menu{
     position: absolute;
     bottom: 0;
-    left:0;
+    left:20px;
     z-index: 99;
     padding: 40px 40px 0 0;
+    display: none;
 }
 .menu:hover li{
     transform: translateY(0) !important;
@@ -310,15 +311,7 @@ td,th{padding: 0;}
 
 /** letter页 **/
 .letter-page{
-    position: fixed;
-    display: none;
-    top:0;
-    left:0;
-    width:100%;
-    height: 100%;
     overflow: hidden;
-    background-color: rgba(0,0,0,.5);
-    z-index: 2;
     cursor: move;
 }
 
@@ -328,7 +321,6 @@ td,th{padding: 0;}
     left:0;
     width:100%;
     height: 100%;
-    overflow: hidden;
     perspective:900px;
     -webkit-perspective:900px;
 }
@@ -422,7 +414,7 @@ td,th{padding: 0;}
     width: 100%;
     height: 100%;
     z-index: 1;
-    transform: rotateY(180deg) translateZ(1px);
+    transform: rotateY(180deg) translateZ(2px);
     background-color: #fff;
     background-image: url(../assets/img/letter.jpg);
 }
@@ -449,24 +441,226 @@ td,th{padding: 0;}
 
 /** person页 **/
 .person-page{
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 64px;
+}
+.person-page .body-box{
+    width: 100%;
+    max-width: 700px;
+    margin:0 auto;
+}
+.person-page .body-box>li{
+    display: flex;
+    align-items: center;
+}
+.person-page .body-box>li:nth-child(2n) {
+    flex-direction: row-reverse;
+}
+.person-page .body-box>li img{
+    flex: none;
+    max-height: 400px;
+}
+.person-page .body-box>li>div{
+    flex: auto;
+    box-sizing: border-box;
+    padding: 0 32px;
+    color: #f0f0f0;
+    font-size: 14px;
+}
+.person-page .body-box .name{
+    font-size: 18px;
+    color: #248BE8;
+    margin-bottom: 8px;
+    letter-spacing: 4px;
+}
+/** 版权页 **/
+.copyright-page{
+    padding-bottom: 80px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.copyright-page .body-box {
+    width: 100%;
+    max-width: 700px;
+    margin:64px auto 0 auto;
+    color: #f0f0f0;
+}
+.copyright-page .body-box .cover{
+    width: 200px;
+    height: auto;
+    border-radius: 5px;
+    display: block;
+    margin: 0 auto;
+    border: solid 1px #f0f0f0;
+}
+.copyright-page .body-box .cover-title{
+    text-align: center;
+    margin-top: 16px;
+}
+.copyright-page .body-box .cover-info{
+    margin: 0 auto;
+    font-size: 13px;
+    color: #ccc;
+    width: 150px;
+}
+.copyright-page .body-box .info-box{
+    box-sizing: border-box;
+    padding: 8px;
+    display: flex;
+    max-width: 700px;
+    margin: 64px auto 0 auto;
+    align-items: center;
+    font-size: 14px;
+}
+.copyright-page .body-box .info-box .flex-none{
+    display: block;
+    width: 150px;
+    text-align: center;
+}
+.copyright-page .body-box .info-box .flex-auto{
+    display: block;
+    letter-spacing: 4px;
+    margin-left: 16px;
+}
+.copyright-page .body-box .info-box .pic{
+    width: 120px;
+    height: 120px;
+    border :solid 2px #f0f0f0;
+    border-radius: 120px;
+}
+.copyright-page .body-box .info-box .name{
+    position: absolute;
+    margin-top: 12px;
+    font-size: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.copyright-page .body-box .info-box .work{
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+.copyright-page a{
+    color: #01AEFF;
+    transition: all 200ms;
+}
+.copyright-page a:hover{
+    color: #90CEE3;
+}
+.copyright-page .copyright-box{
+    margin-top: 128px;
+}
+.copyright-page .copyright-box .t{
+    font-size: 13px;
+    margin-bottom: 16px;
+    text-align: center;
+    letter-spacing: 8px;
+}
+.copyright-page .copyright-box .i{
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 4px;
+    color: #ccc;
+}
+.copyright-page .copyright-box .author{
+    margin-top: 64px;
+    text-align: center;
+    font-size: 12px;
+}
+.copyright-page .copyright-box .photo{
+    display: block;
+    margin:0 auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 56px;
+    border: solid 2px #f0f0f0;
+}
+.copyright-page .copyright-box .author-name{
+    margin-top: 16px;
+    margin-bottom: 8px;
+    color: #ccc;
+}
+/** 页面通用 **/
+.pages{
     position: fixed;
     display: none;
     top:0;
     left:0;
     width:100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,.5);
-    z-index: 2;
+    z-index: 20;
+    background-color: rgba(0,0,0,.8);
 }
-.person-page .body-box{
-    width: 100%;
-    max-width: 640px;
-    margin:0 auto;
+
+.pages .page-title{
+    padding: 64px 0;
+    text-align: center;
+    color: #f0f0f0;
+    transform: translateX(6px);
 }
-.person-page .body-box>li{
-    display: flex;
+.pages .page-title .t1{
+    font-size: 12px;
+    letter-spacing: 8px;
 }
-.person-page .body-box>li img{
+.pages .page-title .t2{
+    font-size: 24px;
+    letter-spacing: 12px;
+    margin-top: 16px;
+}
+.pages .page-title .t3{
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 32px;
+    font-weight: 600;
+    margin: 40px auto 0 auto;
+    transform: translateX(-6px);
+    border: solid 1px #f0f0f0;
+}
+
+/** 页面通用关闭按钮 **/
+.close{
+    position: fixed;
+    bottom: -32px;
+    left: 50%;
+    margin-left: -15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background-color: #f00;
+    border: solid 1px #f0f0f0;
+    z-index: 100;
+    opacity: 0;
+    transform: rotate(45deg);
+    transition: all 300ms;
+    cursor: pointer;
+}
+.close:hover{
+    transform: rotate(-135deg);
+}
+.close.show{
+    opacity: 1;
+    bottom: 20px;
+}
+.close>div:nth-child(1){
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    width: 60%;
+    height: 1px;
+    background-color: #f0f0f0;
+}
+.close>div:nth-child(2){
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    height: 60%;
+    width: 1px;
+    background-color: #f0f0f0;
+}
+.flex-none{
     flex: none;
+}
+.flex-auto{
+    flex: auto;
 }
