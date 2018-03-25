@@ -136,8 +136,9 @@ function initEvents() {
  // 加载完成一张图片
  function loadDown() {
     imgs.down++;
+    $("#per").text((imgs.down/imgs.all * 100).toFixed(1) + '%');
     if(imgs.all === imgs.down) { // 全部加载完成
-        show();
+       show();
     }
 }
 
