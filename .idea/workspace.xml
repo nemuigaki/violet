@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e935022-4ab5-4484-a8d5-0fef4515ef54" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master/assets/img/person7.png" afterPath="$PROJECT_DIR$/master/assets/img/person7.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master/assets/img/res_1-min.png" afterPath="$PROJECT_DIR$/master/assets/img/res_1-min.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master/assets/master.css" afterPath="$PROJECT_DIR$/master/assets/master.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master/assets/master.js" afterPath="$PROJECT_DIR$/master/assets/master.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master/index.html" afterPath="$PROJECT_DIR$/master/index.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,21 +18,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="master.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="master.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/master/assets/master.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="348" column="39" lean-forward="false" selection-start-line="348" selection-start-column="39" selection-end-line="348" selection-end-column="39" />
+            <state relative-caret-position="4674">
+              <caret line="360" column="1" lean-forward="true" selection-start-line="360" selection-start-column="1" selection-end-line="360" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/master/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="203" column="36" lean-forward="false" selection-start-line="203" selection-start-column="36" selection-end-line="203" selection-end-column="36" />
+            <state relative-caret-position="343">
+              <caret line="150" column="36" lean-forward="true" selection-start-line="150" selection-start-column="36" selection-end-line="150" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -45,8 +41,8 @@
       <file leaf-file-name="master.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/master/assets/master.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-10573">
-              <caret line="27" column="18" lean-forward="true" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+            <state relative-caret-position="594">
+              <caret line="27" column="18" lean-forward="false" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -91,9 +87,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/letter/index.html" />
-        <option value="$PROJECT_DIR$/master/index.html" />
         <option value="$PROJECT_DIR$/master/assets/master.css" />
         <option value="$PROJECT_DIR$/master/assets/master.js" />
+        <option value="$PROJECT_DIR$/master/index.html" />
       </list>
     </option>
   </component>
@@ -124,7 +120,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -193,7 +189,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -318,14 +314,16 @@
       <workItem from="1521902911782" duration="4898000" />
       <workItem from="1521957737992" duration="3596000" />
       <workItem from="1521974623916" duration="4238000" />
+      <workItem from="1521982711849" duration="118000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131282000" />
+    <option name="totallyTimeSpent" value="131400000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-30" y="-7" width="1382" height="744" extended-state="0" />
+    <frame x="-30" y="-7" width="1382" height="744" extended-state="1" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20717423" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -673,26 +671,26 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/master/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="203" column="36" lean-forward="false" selection-start-line="203" selection-start-column="36" selection-end-line="203" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/master/assets/master.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10573">
-          <caret line="27" column="18" lean-forward="true" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+        <state relative-caret-position="594">
+          <caret line="27" column="18" lean-forward="false" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/master/assets/master.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="348" column="39" lean-forward="false" selection-start-line="348" selection-start-column="39" selection-end-line="348" selection-end-column="39" />
+        <state relative-caret-position="4674">
+          <caret line="360" column="1" lean-forward="true" selection-start-line="360" selection-start-column="1" selection-end-line="360" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="150" column="36" lean-forward="true" selection-start-line="150" selection-start-column="36" selection-end-line="150" selection-end-column="36" />
           <folding />
         </state>
       </provider>
