@@ -144,8 +144,7 @@ function initEvents() {
  // 页面初始化完毕，页面出现
  function show() {
     animate();
-     $('#loading-info').addClass('hide');
-     $('#loading-box').fadeOut(800);
+     $('#loading-box').addClass('hide').fadeOut(3000);
      $('#menu').animate({opacity: 'show', left: 0}, 600);
      onMp3Play();
     setTimeout(function(){
@@ -213,7 +212,7 @@ function initStart(num) {
  */
 function setStar(i, num) {
     // 定义星星的运行速度s，星星本身的半径w
-    const obj = {};
+    var obj = {};
     if (i< num/9){
         obj.s = 0.000115;
         obj.w = random(20, 22);
@@ -347,7 +346,7 @@ function drow() {
     }
 
     // 有小概率出现流星
-    if((!meteor) && Math.random()>0.996) {
+    if((!meteor) && Math.random()>0.999) {
         meteor = true;
     }
 
@@ -395,7 +394,7 @@ function onPan(e) {
 
     makeLetter();
 
-    if (dom_rotate[1] > 0) {
+    if (dom_rotate[1] > 90) {
         $letterInfo.html('后来，我终于明白什么是爱，<br/>可惜你早已远去，消失在人海');
     } else {
         $letterInfo.html('真希望你还活着.');
@@ -404,10 +403,10 @@ function onPan(e) {
 
 // 根据当前参数设置信封的旋转状态
 function makeLetter() {
-    const pi = Math.PI / 180;
-    const op = Math.abs(Math.sin(pi * (dom_rotate[1] + 90))) / 2;
-    const x = - Math.sin(pi * dom_rotate[1]) * 90;
-    const y = Math.sin(pi * dom_rotate[0]) * 90;
+    var pi = Math.PI / 180;
+    var op = Math.abs(Math.sin(pi * (dom_rotate[1] + 90))) / 2;
+    var x = - Math.sin(pi * dom_rotate[1]) * 90;
+    var y = Math.sin(pi * dom_rotate[0]) * 90;
 
     $dom.css("transform", 'rotateX('+ dom_rotate[0] +'deg) rotateY(' + dom_rotate[1] + 'deg)');
     $dom.css("box-shadow", x + 'px ' + y + 'px ' + '100px rgba(100,100,100,' + op + ')');

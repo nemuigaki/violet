@@ -21,8 +21,8 @@ body{
 }
 ::-webkit-scrollbar
 {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 }
 
 /*定义滚动条轨道 内阴影+圆角*/
@@ -91,10 +91,10 @@ td,th{padding: 0;}
     z-index: 99;
     background-color: #222;
 }
-.loading-box .hide img{
+.loading-box.hide img{
     transform: scale(0,0);
 }
-.loading-box .hide .per{
+.loading-box.hide .per{
     transform: scale(0, 0);
 }
 .loading-box>div{
@@ -336,7 +336,6 @@ td,th{padding: 0;}
     border-radius: 4px;
     transform: rotateX(0) rotateY(0);
     box-shadow: 0 0 100px rgba(100,100,100,.5);
-
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
 
@@ -361,7 +360,7 @@ td,th{padding: 0;}
     background-image: url(../assets/img/violet3.jpg);
     background-size: cover;
     background-position: top center;
-    z-index:2;
+    z-index: 2;
 }
 .letter-page .letter .f1{
     position: absolute;
@@ -414,7 +413,7 @@ td,th{padding: 0;}
     width: 100%;
     height: 100%;
     z-index: 1;
-    transform: rotateY(180deg) translateZ(2px);
+    transform: rotateY(180deg) translateZ(1px);
     background-color: #fff;
     background-image: url(../assets/img/letter.jpg);
 }
@@ -443,7 +442,6 @@ td,th{padding: 0;}
 .person-page{
     overflow-y: auto;
     overflow-x: hidden;
-    padding-bottom: 64px;
 }
 .person-page .body-box{
     width: 100%;
@@ -476,7 +474,6 @@ td,th{padding: 0;}
 }
 /** 版权页 **/
 .copyright-page{
-    padding-bottom: 80px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -663,6 +660,9 @@ td,th{padding: 0;}
 }
 .flex-auto{
     flex: auto;
+}
+.for-ie80{
+    height: 80px;
 }
 @keyframes rotate {
     0% { transform: scale(1,1)}
