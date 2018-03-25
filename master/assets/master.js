@@ -8,8 +8,9 @@ var stars = [];     // 全局 - 所有的星星
 var met = {};       // 全局 - 一颗流星
 
 var imgs = {        // 全局 - 所有需异步加载的图片资源
+    person: {url: 'assets/img/res_1-min.png', dom: null, width:1, height: 1, pie: 1},
     starback: { url: 'assets/img/star-back1.jpg', dom: null, width: 1, height: 1, pie: 1},   // url图片URL，图片DOM，图片宽，图片高，图片宽高比
-    all: 1,
+    all: 2,
     down: 0
 };
 var audio1 = document.getElementById('audio1');
@@ -37,6 +38,7 @@ $(function(){
  function onInit() {
     initEvents();   // 初始化各种绑定事件
     loadImg(imgs.starback, loadDown);  // 加载图片
+    loadImg(imgs.person, loadDown);  // 加载图片
     initStart(1800);    // 创建星星对象
     initMet();          // 初始化流星参数
 }
@@ -91,13 +93,13 @@ function initEvents() {
     $("#to_person-page").on('click', function(){
         clearInterval(rotateTimer);
         $(".pages[id!=person-page]").fadeOut(300);
-        $("#person-page").fadeIn(300);
+        $("#person-page").fadeIn(300).scrollTop(0);
         $("#close").addClass('show');
     });
     $("#to_copyright-page").on('click', function(){
         clearInterval(rotateTimer);
         $(".pages[id!=copyright-page]").fadeOut(300);
-        $("#copyright-page").fadeIn(300);
+        $("#copyright-page").fadeIn(300).scrollTop(0);
         $("#close").addClass('show');
     });
     $('#menu-music').on('click', function(){
@@ -260,12 +262,12 @@ met.pic = c;    // 图片对象
 function initMet() {
     var temp_x = random(width*.3, width*.7); // random(width*.25, width*1);
     met.start = [temp_x, random(height*-.25, height)]; // 随机流星出现位置
-    met.deg = random(-Math.PI/180*10, Math.PI/180*10); // random(-Math.PI/180 * 30, Math.PI/180 * 30);  // 旋转角度
+    met.deg = random(-Math.PI/180*15, Math.PI/180*5); // random(-Math.PI/180 * 30, Math.PI/180 * 30);  // 旋转角度
     met.range = met.start[0] - random(width*.3, width*.8);    // 飞行距离
     met.leng = random(350, 500);    // 流星完全状态下有多长
     met.pin = 0;  // 前100帧和后100帧, 0~1
-    met.sx = -Math.cos(met.deg) * 0.02; // 每次在X上前进的距离
-    met.sy = -Math.sin(met.deg) * 0.02; // 每次在Y上前进的距离
+    met.sx = -Math.cos(met.deg) * 15; // 每次在X上前进的距离
+    met.sy = -Math.sin(met.deg) * 15; // 每次在Y上前进的距离
 }
 // 工具 - 获取随机颜色，少数星星可以有特殊颜色
 function getColor() {
@@ -280,7 +282,8 @@ function random(min, max) {
 }
 
 // 绘制一帧
-var tick = 0.5;
+var personX = 0;
+var personAdd = 0;
 var meteor = false;
 function drow() {
     ctx.drawImage(imgs.starback.dom, 0, 0, imgs.starback.pie > windowPie ? height * imgs.starback.pie : width, imgs.starback.pie > windowPie ? height : width * imgs.starback.pie);
@@ -297,41 +300,6 @@ function drow() {
 
         var rand = Math.random();
 
-        // 画流星
-        if (meteor) {
-            if (met.start[0] > met.range) {
-                met.pin = met.pin < .8 ? met.pin+0.00001 : met.pin;
-                met.start[0]+=met.sx;
-                met.start[1]+=met.sy;
-            } else {
-                if (met.pin > 0) {
-                    met.pin-=0.00002;
-                } else {
-                    meteor = false;
-                    initMet();
-
-                }
-            }
-
-           ctx.save();
-           ctx.translate(met.start[0], met.start[1]);
-           ctx.rotate(met.deg);
-
-            /**
-             * @param pic 图片对象
-             * @param x 画图起始点x
-             * @param y 画图起始点y
-             * @param w 图片宽
-             * @param h 图片高
-             */
-            ctx.drawImage(met.pic, 0, 0, met.leng * met.pin, met.pin);
-            ctx.restore();
-        }
-
-        // 有小概率出现流星
-        if((!meteor) && rand>0.999999) {
-            meteor = true;
-        }
         // 需要闪烁的星星随机调整亮度
         if(t.f) {
             if (rand > 0.5 && t.o > 0.2) {
@@ -345,6 +313,51 @@ function drow() {
             t.m = t.a - 0.5;
         }
         t.m += t.s;
+    }
+
+    // 画流星
+    if (meteor) {
+        if (met.start[0] > met.range) {
+            met.pin = met.pin < 1 ? met.pin+0.01 : met.pin;
+            met.start[0]+=met.sx;
+            met.start[1]+=met.sy;
+        } else {
+            if (met.pin > 0) {
+                met.pin-=0.02;
+            } else {
+                meteor = false;
+                initMet();
+
+            }
+        }
+
+       ctx.save();
+       ctx.translate(met.start[0], met.start[1]);
+       ctx.rotate(met.deg);
+
+        /**
+         * @param pic 图片对象
+         * @param x 画图起始点x
+         * @param y 画图起始点y
+         * @param w 图片宽
+         * @param h 图片高
+         */
+        ctx.drawImage(met.pic, 0, 0, met.leng * met.pin, met.pin*2);
+        ctx.restore();
+    }
+
+    // 有小概率出现流星
+    if((!meteor) && Math.random()>0.996) {
+        meteor = true;
+    }
+
+    // 最后画人物
+    ctx.drawImage(imgs.person.dom, 5+Math.floor(personX) * 1300, 0, 1295, 1080, width - height*1.2,  0, height *1.2, height);
+
+    if(personX>16) {
+        personX = 0;
+    } else {
+        personX += .2;
     }
 }
 
