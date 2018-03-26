@@ -1,0 +1,110 @@
+@media only screen and (max-width: 750px) {
+    .logo-box{
+        top: 0;
+        left: 0;
+        width: 50vw;
+        height: 50vw;
+        min-width: 160px;
+        min-height: 160px;
+        transform: translateY(0);
+    }
+    .logo-box .title{
+        width: 160px;
+        margin-top: -4%;
+        margin-left: -80px;
+        text-align: center;
+        font-size: 16px;
+        letter-spacing: 4px;
+    }
+    .logo-box .title-lit{
+        width: 160px;
+        margin-left: -80px;
+        margin-top: 8%;
+        letter-spacing: 1px;
+        font-size: 12px;
+    }
+    .menu{
+        position: absolute;
+        bottom: 0;
+        left:8px;
+        z-index: 99;
+        padding: 0;
+        display: none;
+        overflow: hidden;
+    }
+    .copyright-page .body-box .info-box{
+        box-sizing: border-box;
+        padding: 16px;
+        flex-direction: column;
+        max-width: 700px;
+        margin: 64px auto 0 auto;
+        align-items: center;
+    }
+    .copyright-page .body-box .info-box .flex-none{
+        display: block;
+        width: 150px;
+        text-align: center;
+    }
+    .copyright-page .body-box .info-box .flex-auto{
+        display: block;
+        letter-spacing: 4px;
+        margin-left: 0;
+        margin-top: 32px;
+    }
+    .copyright-page .body-box .info-box .flex-auto .work{
+        text-align: center;
+    }
+    .person-page .body-box>li{
+        flex-direction: column !important;
+        margin-bottom: 32px;
+    }
+    .person-page .body-box>li>div{
+        padding: 0 16px;
+    }
+    .person-page .body-box .name{
+        text-align: center;
+        margin-top: 16px;
+    }
+    .letter-page .letter{
+        width: 80vw;
+        height: 40vw;
+        margin: -20vw -40vw;
+    }
+    .letter-page .letter .letter-a{
+        top: 4px;
+        left: 4px;
+        border-radius: 2px;
+        width: calc(100% - 8px);
+        height: calc(100% - 8px);
+    }
+    .letter-page .letter .letter-b{
+        padding: 8px;
+    }
+    .letter-page .letter .letter-b .letter-body{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 8px;
+        border-top: solid 1px #90CEE3;
+        border-bottom: solid 1px  #90CEE3;
+        height: 100%;
+        font-size: 14px;
+        color: #666;
+    }
+    .letter-page .letter .letter-b .letter-body .addressee{
+        transform: scale(.8, .8);
+        transform-origin:0 50%;
+        -webkit-transform-origin:0 50%;
+    }
+    .letter-page .letter .letter-b .letter-body .info{
+        transform: scale(.8, .8);
+    }
+    .letter-page .letter .letter-b .letter-body .sender{
+        text-align: right;
+        transform: scale(.8, .8);
+        transform-origin:50% 0;
+        -webkit-transform-origin:100% 50%;
+    }
+}

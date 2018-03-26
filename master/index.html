@@ -4,18 +4,37 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+    <meta name="format-detection" content="telephone=no"><!-- 阻止苹果将数字解析为电话号码 -->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!-- 禁用苹果的系统菜单 -->
     <link rel="stylesheet" href="assets/master.css" />
+    <link rel="stylesheet" href="assets/master-meta.css" />
     <link href='http://cdn.webfont.youziku.com/webfonts/nomal/24611/46613/5ab36760f629d905b82e62d5.css' rel='stylesheet' type='text/css' />
     <title>Violet Evergarden</title>
+    <style>
+        .test{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: auto;
+            z-index: 9999;
+            background: #000;
+            color: #fff;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div id="loading-box" class="loading-box">
     <div id="loading-info">
         <div class="loading-img"><img src="assets/img/loading-5.gif" /></div>
         <div class="per" id="per">0%</div>
+        <div id="loading-phone-in" class="phone-in"><div>进入<br/>（有音乐）</div></div>
     </div>
 </div>
 <div class="boss">
+    <div id="test" class="test"></div>
     <audio id="audio1" src="assets/b.mp3" loop preload></audio>
     <canvas id="canvas1" class="canvas"></canvas>
     <div id="logo-box" class="logo-box">
@@ -148,6 +167,7 @@
                 </div>
             </li>
         </ul>
+        <div class="foot-info">“自动手记人偶”这个名字名噪一时的时候，已经是相当一段时间前的事了。<br/>奥兰德博士发明了用于书写记录人声话语的机械。当初他仅仅为了爱妻而制造的这一机械，不知何时已普及至全世界，甚至设立了提供借出服务的机关。</div>
         <div class="for-ie80"></div>
     </div>
     <div class="copyright-page pages" id="copyright-page">
@@ -205,6 +225,7 @@
     </div>
     <div class="footer">© 2018 <a href="http://blog.isluo.com" target="_blank">blog.isluo.com</a> Ltd.</div>
 </div>
+<script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/hammer.js/2.0.8/hammer.min.js"></script>
 <script src="assets/jquery.mousewheel.min.js"></script>

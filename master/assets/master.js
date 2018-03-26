@@ -1,45 +1,62 @@
-/** 全局函数 **/
-var width = 1;      // 全局 - 窗口宽度
-var height = 1;     // 全局 - 窗口高度
-var windowPie = 1;  // 全局 - 当前工作区宽高比
-var canvas = document.getElementById('canvas1');    // 全局 - 主canvas
-var ctx = canvas.getContext('2d');                  // 全局 - 主ctx画笔
-var stars = [];     // 全局 - 所有的星星
-var met = {};       // 全局 - 一颗流星
-
-var imgs = {        // 全局 - 所有需异步加载的图片资源
+/** 全局通用变量 **/
+var width = 1;              // 全局 - 窗口宽度
+var height = 1;             // 全局 - 窗口高度
+var windowPie = 1;          // 全局 - 当前工作区宽高比
+var isiOS = navigator.userAgent.indexOf('iPhone') > -1; // ios终端
+var isIpad = navigator.userAgent.indexOf('iPad') > -1;  // ipad特殊处理
+var isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1; //android终端
+var phone = isPhone();    // 全局 - 当前是否是移动端
+var imgs = {                // 全局 - 所有需异步加载的图片资源
     person: {url: 'assets/img/res_1-min.png', dom: null, width:1, height: 1, pie: 1},
     starback: { url: 'assets/img/star-back1.jpg', dom: null, width: 1, height: 1, pie: 1},   // url图片URL，图片DOM，图片宽，图片高，图片宽高比
     all: 2,
     down: 0
 };
+var $z = $("#z");
+/** canvas相关全局变量 **/
+var canvas = document.getElementById('canvas1');    // 全局 - 主canvas
+var ctx = canvas.getContext('2d');                  // 全局 - 主ctx画笔
+var dpi = CanvalHD(ctx);                // 全局 - 屏幕DPI值，用于高清缩放
+var drow_x = 1; // 根据屏幕宽度确定人像绘图位置
+var stars = [];     // 全局 - 所有的星星
+var met = {};       // 全局 - 一颗流星
+
+/** 音频全部变量 **/
 var audio1 = document.getElementById('audio1');
 var volumeTimer = null; // 音量timer
 
-/** letter页全局函数 **/
+/** letter页全局变量 **/
 var dom_rotate = [0,0]; // 当前旋转角
 var $dom = $("#letter");
 var $letterInfo = $("#letter-info");
-var stop = false;   // 是否停止自旋转
 var scoler = 1; // 缩放比例
 var rotateTimer = null; // 旋转timer
 var hammerTest = null;
-
+var dom_deg = 100;  // 信件旋转摩擦力，移动端弄小点
 $(function(){
     /** 开始执行loading，等待所有的图片加载完成 **/
     onInit();
 });
 
 /**
+ * 工具函数
+ * **/
+
+/** 判断是否是移动端 **/
+function isPhone() {
+    return navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+}
+/**
  * 初始化相关
  * **/
 
 /** 初始化加载 **/
  function onInit() {
+    FastClick.attach(document.body);    // 300ms延迟
     initEvents();   // 初始化各种绑定事件
     loadImg(imgs.starback, loadDown);  // 加载图片
     loadImg(imgs.person, loadDown);  // 加载图片
-    initStart(1800);    // 创建星星对象
+    // initStart(phone ? 1800 : 100);    // 创建星星对象
     initMet();          // 初始化流星参数
 }
 
@@ -47,22 +64,33 @@ $(function(){
 function initEvents() {
     /** 窗口大小改变时触发 **/
     $(window).on('resize', function(){
-        height = this.innerHeight;
-        width = this.innerWidth;
-        canvas.width = width;
-        canvas.height = height;
+        width = canvas.offsetWidth;
+        height = canvas.offsetHeight;
+        canvas.width = width * dpi;
+        canvas.height = height * dpi;
         windowPie = width/height;
-        initStart(1800);
+        drow_x = Math.min(canvas.height * 1.2, canvas.width/1.15);
+        dom_deg = phone ? 20 : 80;
+        initStart(phone ? 300 : 1800);
     }).resize();
 
     /** 信窗口相关事件 **/
     hammerTest = new Hammer(document.getElementById('letter-page'));
     hammerTest.get('pan').set({ direction: Hammer.DIRECTION_ALL }); // 开启所有方向的检测
-
-    hammerTest.on('pan panmove swipe swipeup press pressup', function(e) {
+    hammerTest.get('pinch').set({ enable: true });
+    hammerTest.on('pan pinch', function(e) {
         switch (e.type) {
             case "pan":
                 onPan(e);
+                break;
+            case "pinch":
+                var s = e.scale;
+                if (s > 1.5){
+                    s = 1.5;
+                } else if(s < .5){
+                    s = .5;
+            }
+                $z.css({"transform":"scale(" + s + ")"});
         }
     });
 
@@ -79,7 +107,7 @@ function initEvents() {
         }else if(scoler<0.5){
             scoler = 0.5;
         }
-        $('#z').css({"transform":"scale("+ scoler +")"});
+        $z.css({"transform":"scale("+ scoler +")"});
     });
 
     /** 菜单点击事件 **/
@@ -109,12 +137,25 @@ function initEvents() {
             onMp3Pause();
         }
     });
+
     /** close按钮事件 **/
     $("#close").on('click', function(){
         clearInterval(rotateTimer);
         $(".pages").fadeOut(300);
         $("#close").removeClass('show');
     });
+
+    /** 移动端 起始开始 **/
+    $('#loading-phone-in').on('click', function(){
+        onMp3Play();
+        $('#loading-phone-in').removeClass('show');
+        start();
+    });
+
+    /** 只有PC端才有菜单hover效果 **/
+    if (!phone) {
+        $('#menu>li .info').addClass('pc');
+    }
 }
 
  // 工具 - 加载一张图片
@@ -138,21 +179,34 @@ function initEvents() {
     imgs.down++;
     $("#per").text((imgs.down/imgs.all * 100).toFixed(1) + '%');
     if(imgs.all === imgs.down) { // 全部加载完成
-       show();
+      show();
     }
 }
 
  // 页面初始化完毕，页面出现
  function show() {
+     $('#loading-box').addClass('hide');
+    if (phone) {    // 是移动端
+        $('#loading-phone-in').addClass('show');
+    } else {
+        onMp3Play();
+        start();
+    }
+}
+
+/** 开始 **/
+function start() {
+    $('#loading-box').fadeOut(3000);
+    $('#menu').animate({opacity: 'show', left: 0}, 600, function(){
+        if(phone) {
+            $('#menu').addClass('menu-phone');
+        }
+    });
     animate();
-     $('#loading-box').addClass('hide').fadeOut(3000);
-     $('#menu').animate({opacity: 'show', left: 0}, 600);
-     onMp3Play();
     setTimeout(function(){
         $('#logo-box').addClass('show');
     }, 600);
 }
-
  /**
  * 主canvas相关
  * **/
@@ -166,11 +220,11 @@ function initStart(num) {
         }
     }
     var obj;
+    var max = Math.sqrt(Math.pow(canvas.width,2) + Math.pow(canvas.height, 2));
     if(stars.length) {
-        var max = Math.sqrt(Math.pow(width,2) + Math.pow(height, 2));
         for(var j=0;j<stars.length;j++) {
             obj = setStar(j, num);
-            stars[j].r = random(max*0.08*grad[Math.round(random(0,grad.length))], max);
+            stars[j].r = random(max* 0.07 * grad[Math.round(random(0,grad.length))], max);
             stars[j].a = random(0, 0.5);
             stars[j].m = 0;
             stars[j].f = Math.random() > 0.7;
@@ -193,14 +247,13 @@ function initStart(num) {
             obj = setStar(i, num);
             var star = {
                 pic: c,
-                r: random(200, Math.sqrt(Math.pow(width,2) + Math.pow(height, 2))), // 星轨半径(圆心距离) Math.sqrt(Math.pow(width,2) + Math.pow(height, 2))
+                r: random(max* 0.07 * grad[Math.round(random(0,grad.length))], max), // 星轨半径(圆心距离) Math.sqrt(Math.pow(width,2) + Math.pow(height, 2))
                 a: random(0, 0.5),  // 起始弧度
                 m: 0,   // 当前偏移弧度
-                // color: getColor(),  // 星星的颜色
                 f: Math.random() > 0.7, // 星星是否会闪烁
                 o: random(0.6, 1),   // 星星当前的透明度
                 s: obj.s,
-                w: obj.w,
+                w: obj.w
             };
             stars.push(star);
         }
@@ -216,31 +269,31 @@ function setStar(i, num) {
     var obj = {};
     if (i< num/9){
         obj.s = 0.000115;
-        obj.w = random(20, 22);
+        obj.w = random(20, 22) * dpi;
     } else if (i< num/8) {
         obj.s = 0.00012;
-        obj.w = random(22, 23);
+        obj.w = random(22, 23) * dpi;
     } else if (i< num/7) {
         obj.s = 0.000125;
-        obj.w = random(23, 24);
+        obj.w = random(23, 24) * dpi;
     } else if (i< num/6) {
         obj.s = 0.00012;
-        obj.w = random(24, 25);
+        obj.w = random(24, 25) * dpi;
     } else if (i<num/5){
         obj.s = 0.00013;
-        obj.w = random(25, 26);
+        obj.w = random(25, 26) * dpi;
     } else if (i< num/4) {
         obj.s = 0.000135;
-        obj.w = random(26, 27);
+        obj.w = random(26, 27) * dpi;
     } else if (i< num/3) {
         obj.s = 0.00014;
-        obj.w = random(27, 28);
+        obj.w = random(27, 28) * dpi;
     } else if (i< num/2) {
         obj.s = 0.000145;
-        obj.w = random(28, 29);
+        obj.w = random(28, 29) * dpi;
     } else{
         obj.s = 0.00015;
-        obj.w = random(29, 30);
+        obj.w = random(29, 30) * dpi;
     }
     return obj;
 }
@@ -260,14 +313,14 @@ c_ctx.beginPath();
 c_ctx.fillRect(0,0,300,3);
 met.pic = c;    // 图片对象
 function initMet() {
-    var temp_x = random(width*.3, width*.7); // random(width*.25, width*1);
-    met.start = [temp_x, random(height*-.25, height)]; // 随机流星出现位置
+    var temp_x = random(canvas.width*.3, canvas.width*.7); // random(width*.25, width*1);
+    met.start = [temp_x, random(canvas.height*-.25, canvas.height)]; // 随机流星出现位置
     met.deg = random(-Math.PI/180*15, Math.PI/180*5); // random(-Math.PI/180 * 30, Math.PI/180 * 30);  // 旋转角度
-    met.range = met.start[0] - random(width*.3, width*.8);    // 飞行距离
-    met.leng = random(350, 500);    // 流星完全状态下有多长
+    met.range = met.start[0] - random(canvas.width*.3, canvas.width*.8);    // 飞行距离
+    met.leng = random(350*dpi, 500*dpi);    // 流星完全状态下有多长
     met.pin = 0;  // 前100帧和后100帧, 0~1
-    met.sx = -Math.cos(met.deg) * 15; // 每次在X上前进的距离
-    met.sy = -Math.sin(met.deg) * 15; // 每次在Y上前进的距离
+    met.sx = -Math.cos(met.deg) * 15 * dpi; // 每次在X上前进的距离
+    met.sy = -Math.sin(met.deg) * 15 * dpi; // 每次在Y上前进的距离
 }
 // 工具 - 获取随机颜色，少数星星可以有特殊颜色
 function getColor() {
@@ -286,7 +339,7 @@ var personX = 0;
 var personAdd = 0;
 var meteor = false;
 function drow() {
-    ctx.drawImage(imgs.starback.dom, 0, 0, imgs.starback.pie > windowPie ? height * imgs.starback.pie : width, imgs.starback.pie > windowPie ? height : width * imgs.starback.pie);
+    ctx.drawImage(imgs.starback.dom, 0, 0, imgs.starback.pie > windowPie ? canvas.height * imgs.starback.pie : canvas.width, imgs.starback.pie > windowPie ? canvas.height : canvas.width * imgs.starback.pie);
 
     for(var i=0; i < stars.length; i++) {
         var t = stars[i];
@@ -295,7 +348,7 @@ function drow() {
 
         ctx.save();
         ctx.globalAlpha = t.o;
-        ctx.drawImage(t.pic, width - Math.sin(now * Math.PI) * t.r,  height - Math.cos(now * Math.PI) * t.r, t.w, t.w);
+        ctx.drawImage(t.pic, canvas.width - Math.sin(now * Math.PI) * t.r, canvas.height - Math.cos(now * Math.PI) * t.r, t.w, t.w);
         ctx.restore();
 
         var rand = Math.random();
@@ -347,17 +400,16 @@ function drow() {
     }
 
     // 有小概率出现流星
-    if((!meteor) && Math.random()>0.999) {
+    if( (!phone) && (!meteor) && Math.random()>0.999) {
         meteor = true;
     }
 
-    // 最后画人物
-    ctx.drawImage(imgs.person.dom, 5+Math.floor(personX) * 1300, 0, 1295, 1080, width - height*1.2,  0, height *1.2, height);
-
-    if(personX>16) {
-        personX = 0;
-    } else {
-        personX += .2;
+    // 最后画人物（img对象，裁切起始点X，裁切起始点Y，裁切宽度，裁切高度，绘图起始点X，绘图起始点Y，绘图宽度，绘图高度）
+    ctx.drawImage(imgs.person.dom, 4 + personX * 1300, 0, 1296, 1080, canvas.width - drow_x,  0, canvas.height * 1.2, canvas.height);
+    personAdd++;
+    if (personAdd === 4) {
+        personX = personX > 15 ? 0 : personX + 1;
+        personAdd = 0;
     }
 }
 
@@ -385,8 +437,8 @@ function autoRotate() {
 
 // 处理移动
 function onPan(e) {
-    dom_rotate[0] -= e.deltaY/100;
-    dom_rotate[1] += e.deltaX/100;
+    dom_rotate[0] -= e.deltaY/dom_deg;
+    dom_rotate[1] += e.deltaX/dom_deg;
     if (dom_rotate[0]>15) {
         dom_rotate[0] = 15;
     } else if (dom_rotate[0]<-15) {
@@ -418,14 +470,22 @@ function onMp3Play() {
     audio1.play();
     $('#menu-music').addClass('open');
     $('#music-info').data('music','open').text('播放中');
-    volumeUp();
+    if (isiOS || isIpad) {  // IOS移动端不支持JS调节音量,不调节音量
+
+    } else {
+        volumeUp();
+    }
 }
 
 /** 音频事件，暂停播放 **/
 function onMp3Pause() {
     $('#menu-music').removeClass('open');
     $('#music-info').data('music','close').text('已关闭');
-    volumeDown();
+    if (isiOS || isIpad) {  // IOS移动端不支持JS调节音量,直接暂停
+        audio1.pause();
+    } else {
+        volumeDown();
+    }
 }
 
 /** 音频音量调大 **/
@@ -433,16 +493,32 @@ function volumeUp() {
     clearTimeout(this.volumeTimer);
     if (audio1.volume + 0.1 <= 1) {
         audio1.volume += 0.1;
-        this.volumeTimer = setTimeout(volumeUp, 200);
+        this.volumeTimer = setTimeout(volumeUp, 150);
     }
 }
 /** 音频音量调小 **/
 function volumeDown() {
+
     clearTimeout(this.volumeTimer);
     if (audio1.volume - 0.1 >= 0) {
         audio1.volume -= 0.1;
-        volumeTimer = setTimeout(volumeDown, 200);
+        volumeTimer = setTimeout(volumeDown, 150);
     } else {
         audio1.pause();
+    }
+}
+
+/** 获取屏幕像素密度比 **/
+function CanvalHD(ctx){
+    var devicePixelRatio = window.devicePixelRatio || 1;
+    var backingStorePixelRatio = ctx.webkitBackingStorePixelRatio ||
+        ctx.mozBackingStorePixelRatio ||
+        ctx.msBackingStorePixelRatio ||
+        ctx.oBackingStorePixelRatio ||
+        ctx.backingStorePixelRatio || 1;
+    if (isAndroid || isIpad || !phone) {
+        return devicePixelRatio / backingStorePixelRatio;
+    } else {
+        return devicePixelRatio / backingStorePixelRatio * 2;
     }
 }
