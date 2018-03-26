@@ -7,8 +7,8 @@ var isIpad = navigator.userAgent.indexOf('iPad') > -1;  // ipad特殊处理
 var isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1; //android终端
 var phone = isPhone();    // 全局 - 当前是否是移动端
 var imgs = {                // 全局 - 所有需异步加载的图片资源
-    person: {url: 'assets/img/res_1-min.png', dom: null, width:1, height: 1, pie: 1},
-    starback: { url: 'assets/img/star-back1.jpg', dom: null, width: 1, height: 1, pie: 1},   // url图片URL，图片DOM，图片宽，图片高，图片宽高比
+    person: {url: 'http://isluo.com/imgs/violet-res-min.jpg', dom: null, width:1, height: 1, pie: 1,  t: true},
+    starback: { url: 'http://isluo.com/imgs/violet-star-back.jpg', dom: null, width: 1, height: 1, pie: 1},   // url图片URL，图片DOM，图片宽，图片高，图片宽高比
     all: 2,
     down: 0
 };
@@ -166,6 +166,9 @@ function initEvents() {
        item.width = img.width;
        item.height = img.height;
        item.pie = img.width / img.height;
+        if (item.t) {
+            makeImg(item, img);
+        }
        callback();
     };
     img.onerror= function() {
@@ -521,4 +524,37 @@ function CanvalHD(ctx){
     } else {
         return devicePixelRatio / backingStorePixelRatio * 2;
     }
+}
+
+/** 图片处理 去掉红色 **/
+function makeImg(item, img) {
+    console.log('宽高：'+ img.width + "," + img.height);
+    var c = document.createElement('canvas');
+    c.width = img.width;
+    c.height = img.height;
+    var c_ctx = c.getContext('2d');
+    c_ctx.drawImage(img,0,0,c.width,c.height);
+    var imgdata = c_ctx.getImageData(0,0,c.width,c.height);	//得到画布中所有数据
+    // 抹去所有的红色
+    for(var i=3; i<imgdata.data.length; i+=4){
+        var r = imgdata.data[i-3];
+        var g = imgdata.data[i-2];
+        var b = imgdata.data[i-1];
+        if (
+            r > 180 &&
+            g < 80 &&
+            b < 80
+        ) {
+            imgdata.data[i-3] = imgdata.data[i-2] = imgdata.data[i-1] = imgdata.data[i] = 0;
+        }
+        else if (
+            r+54 > g + b &&
+            r > g &&
+            r > b
+        ) {
+            imgdata.data[i-3] = r - ((r-g)+(r-b))/2;
+        }
+    }
+    c_ctx.putImageData(imgdata,0,0);
+    item.dom = c;
 }
