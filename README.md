@@ -3,6 +3,10 @@
 
 ---
 
+已经做好了：<a href="http://isluo.com/work/violet/index.html" target="_blank">http://isluo.com/work/violet/index.html</a>
+
+---
+
 个人项目 - 各模块存放
 
 还没想好用什么框架
