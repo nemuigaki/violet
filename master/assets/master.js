@@ -7,9 +7,47 @@ var isIpad = navigator.userAgent.indexOf('iPad') > -1;  // ipad特殊处理
 var isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1; //android终端
 var phone = isPhone();    // 全局 - 当前是否是移动端
 var imgs = {                // 全局 - 所有需异步加载的图片资源
-    person: {url: 'http://isluo.com/imgs/violet-res-min.jpg', dom: null, width:1, height: 1, pie: 1,  t: true},
+    // person: {url: 'http://isluo.com/imgs/violet-res-min.jpg', dom: null, width:1, height: 1, pie: 1,  t: true},
     starback: { url: 'http://isluo.com/imgs/violet-star-back.jpg', dom: null, width: 1, height: 1, pie: 1},   // url图片URL，图片DOM，图片宽，图片高，图片宽高比
-    all: 2,
+    v: [
+        { url: 'http://isluo.com/imgs/violet/1-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/2-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/3-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/4-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/5-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/6-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/7-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/8-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/9-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/10-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/11-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/12-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/13-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/14-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/15-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/16-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/17-min.png', dom: null, width: 1, height: 1, pie: 1}
+    ],
+    vm: [
+        { url: 'http://isluo.com/imgs/violet/1m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/2m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/3m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/4m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/5m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/6m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/7m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/8m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/9m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/10m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/11m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/12m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/13m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/14m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/15m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/16m-min.png', dom: null, width: 1, height: 1, pie: 1},
+        { url: 'http://isluo.com/imgs/violet/17m-min.png', dom: null, width: 1, height: 1, pie: 1}
+    ],
+    all: 18,
     down: 0
 };
 var $z = $("#z");
@@ -55,8 +93,12 @@ function isPhone() {
     FastClick.attach(document.body);    // 300ms延迟
     initEvents();   // 初始化各种绑定事件
     loadImg(imgs.starback, loadDown);  // 加载图片
-    loadImg(imgs.person, loadDown);  // 加载图片
-    // initStart(phone ? 1800 : 100);    // 创建星星对象
+    //loadImg(imgs.person, loadDown);  // 加载图片
+    var vs = phone ? imgs.vm : imgs.v;
+
+    for(var i=0; i<vs.length; i++) {
+        loadImg(vs[i], loadDown);
+    }
     initMet();          // 初始化流星参数
 }
 
@@ -69,8 +111,8 @@ function initEvents() {
         canvas.width = width * dpi;
         canvas.height = height * dpi;
         windowPie = width/height;
-        drow_x = Math.min(canvas.height * 1.2, canvas.width/1.15);
-        dom_deg = phone ? 20 : 80;
+        drow_x = Math.min(canvas.height * 1.15, canvas.width/1.1);
+        dom_deg = phone ? 20 : 70;
         initStart(phone ? 300 : 1800);
     }).resize();
 
@@ -166,9 +208,9 @@ function initEvents() {
        item.width = img.width;
        item.height = img.height;
        item.pie = img.width / img.height;
-        if (item.t) {
-            makeImg(item, img);
-        }
+        // if (item.t) {
+        //     makeImg(item, img);
+        // }
        callback();
     };
     img.onerror= function() {
@@ -341,11 +383,12 @@ function random(min, max) {
 var personX = 0;
 var personAdd = 0;
 var meteor = false;
+var dofor = 0;
 function drow() {
     ctx.drawImage(imgs.starback.dom, 0, 0, imgs.starback.pie > windowPie ? canvas.height * imgs.starback.pie : canvas.width, imgs.starback.pie > windowPie ? canvas.height : canvas.width * imgs.starback.pie);
 
-    for(var i=0; i < stars.length; i++) {
-        var t = stars[i];
+    for(dofor=0; dofor < stars.length; dofor++) {
+        var t = stars[dofor];
         var now = t.a - t.m;
         ctx.fillStyle = t.color;
 
@@ -402,17 +445,20 @@ function drow() {
         ctx.restore();
     }
 
-    // 有小概率出现流星
-    if( (!phone) && (!meteor) && Math.random()>0.999) {
-        meteor = true;
-    }
 
     // 最后画人物（img对象，裁切起始点X，裁切起始点Y，裁切宽度，裁切高度，绘图起始点X，绘图起始点Y，绘图宽度，绘图高度）
-    ctx.drawImage(imgs.person.dom, 4 + personX * 1300, 0, 1296, 1080, canvas.width - drow_x,  0, canvas.height * 1.2, canvas.height);
+    var p = phone ? imgs.vm : imgs.v;
+   // ctx.drawImage(imgs.person.dom, 4 + personX * 1300, 0, 1296, 1080, canvas.width - drow_x,  0, canvas.height * 1.2, canvas.height);
+    p[personX].dom && ctx.drawImage(p[personX].dom, canvas.width - drow_x, 0, canvas.height * p[personX].pie, canvas.height);
     personAdd++;
     if (personAdd === 4) {
         personX = personX > 15 ? 0 : personX + 1;
         personAdd = 0;
+    }
+
+    // 有小概率出现流星
+    if( (!phone) && (!meteor) && Math.random()>0.999) {
+        meteor = true;
     }
 }
 
