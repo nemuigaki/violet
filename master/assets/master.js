@@ -196,7 +196,7 @@ function initEvents() {
 
     /** 只有PC端才有菜单hover效果 **/
     if (!phone) {
-        $('#menu>li .info').addClass('pc');
+        $('#menu>li').addClass('pc');
     }
 }
 

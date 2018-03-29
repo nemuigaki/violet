@@ -307,7 +307,7 @@ td,th{padding: 0;}
     opacity: 0;
 }
 .menu .pc:hover .info{
-    opacity: 1;
+    opacity: 1 !important;
     transform: translateY(-50%) translateX(0);
 }
 .menu>li:nth-child(1) {
