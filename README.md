@@ -3,7 +3,7 @@
 
 ---
 
-已经做好了：<a href="https://isluo.com/work/violet" target="_blank">https://isluo.com/work/violet</a>
+已经做好了：<a href="https://isluo.com/work/violet/" target="_blank">https://isluo.com/work/violet/</a>
 
 ---
 
