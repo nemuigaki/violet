@@ -8,45 +8,201 @@ var isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAge
 var phone = isPhone();    // 全局 - 当前是否是移动端
 var imgs = {                // 全局 - 所有需异步加载的图片资源
     // person: {url: 'http://isluo.com/imgs/violet-res-min.jpg', dom: null, width:1, height: 1, pie: 1,  t: true},
-    starback: {url: 'http://isluo.com/imgs/violet-star-back.jpg', dom: null, width: 1, height: 1, pie: 1},   // url图片URL，图片DOM，图片宽，图片高，图片宽高比
-    v: [
-        {url: 'https://isluo.com/work/violet/assets/v/1-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/2-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/3-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/4-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/5-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/6-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/7-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/8-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/9-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/10-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/11-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/12-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/13-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/14-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/15-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/16-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/17-min.png', dom: null, width: 1, height: 1, pie: 1}
-    ],
-    vm: [
-        {url: 'https://isluo.com/work/violet/assets/v/1m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/2m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/3m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/4m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/5m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/6m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/7m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/8m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/9m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/10m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/11m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/12m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/13m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/14m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/15m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/16m-min.png', dom: null, width: 1, height: 1, pie: 1},
-        {url: 'https://isluo.com/work/violet/assets/v/17m-min.png', dom: null, width: 1, height: 1, pie: 1}
-    ],
+    starback: {url: 'https://isluo.com/work/violet/assets/img/star-back1.jpg', dom: null, width: 1, height: 1, pie: 1},   // url图片URL，图片DOM，图片宽，图片高，图片宽高比
+    v: [{
+        url: 'https://isluo.com/work/violet/assets/v/1-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/2-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/3-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/4-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/5-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/6-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/7-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/8-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/9-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/10-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/11-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/12-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/13-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/14-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/15-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/16-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {url: 'https://isluo.com/work/violet/assets/v/17-min.webp', dom: null, width: 1, height: 1, pie: 1}],
+    vm: [{
+        url: 'https://isluo.com/work/violet/assets/v/1m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/2m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/3m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/4m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/5m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/6m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/7m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/8m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/9m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/10m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/11m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/12m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/13m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/14m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/15m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {
+        url: 'https://isluo.com/work/violet/assets/v/16m-min.webp',
+        dom: null,
+        width: 1,
+        height: 1,
+        pie: 1
+    }, {url: 'https://isluo.com/work/violet/assets/v/17m-min.webp', dom: null, width: 1, height: 1, pie: 1}],
     all: 18,
     down: 0
 };
@@ -293,14 +449,12 @@ function initStart(num) {
             c_ctx.fill();
             obj = setStar(i, num);
             var star = {
-                pic: c,
-                r: random(max * 0.07 * grad[Math.round(random(0, grad.length))], max), // 星轨半径(圆心距离) Math.sqrt(Math.pow(width,2) + Math.pow(height, 2))
+                pic: c, r: random(max * 0.07 * grad[Math.round(random(0, grad.length))], max), // 星轨半径(圆心距离) Math.sqrt(Math.pow(width,2) + Math.pow(height, 2))
                 a: random(0, 0.5),  // 起始弧度
                 m: 0,   // 当前偏移弧度
                 f: Math.random() > 0.7, // 星星是否会闪烁
                 o: random(0.6, 1),   // 星星当前的透明度
-                s: obj.s,
-                w: obj.w
+                s: obj.s, w: obj.w
             };
             stars.push(star);
         }
@@ -373,9 +527,7 @@ function initMet() {
 
 // 工具 - 获取随机颜色，少数星星可以有特殊颜色
 function getColor() {
-    return Math.random() < 0.8 ?
-        "rgb(220,220,255)" :
-        "rgb(" + Math.round(random(50, 255)) + ", " + Math.round(random(50, 255)) + ", " + Math.round(random(50, 255)) + ")";
+    return Math.random() < 0.8 ? "rgb(220,220,255)" : "rgb(" + Math.round(random(50, 255)) + ", " + Math.round(random(50, 255)) + ", " + Math.round(random(50, 255)) + ")";
 }
 
 // 工具 - 获取范围随机数
@@ -567,11 +719,7 @@ function volumeDown() {
 /** 获取屏幕像素密度比 **/
 function CanvalHD(ctx) {
     var devicePixelRatio = window.devicePixelRatio || 1;
-    var backingStorePixelRatio = ctx.webkitBackingStorePixelRatio ||
-        ctx.mozBackingStorePixelRatio ||
-        ctx.msBackingStorePixelRatio ||
-        ctx.oBackingStorePixelRatio ||
-        ctx.backingStorePixelRatio || 1;
+    var backingStorePixelRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1;
     if (isAndroid || isIpad || !phone) {
         return devicePixelRatio / backingStorePixelRatio;
     } else {
@@ -593,17 +741,9 @@ function makeImg(item, img) {
         var r = imgdata.data[i - 3];
         var g = imgdata.data[i - 2];
         var b = imgdata.data[i - 1];
-        if (
-            r > 180 &&
-            g < 80 &&
-            b < 80
-        ) {
+        if (r > 180 && g < 80 && b < 80) {
             imgdata.data[i - 3] = imgdata.data[i - 2] = imgdata.data[i - 1] = imgdata.data[i] = 0;
-        } else if (
-            r + 54 > g + b &&
-            r > g &&
-            r > b
-        ) {
+        } else if (r + 54 > g + b && r > g && r > b) {
             imgdata.data[i - 3] = r - ((r - g) + (r - b)) / 2;
         }
     }
