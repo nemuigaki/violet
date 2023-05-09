@@ -387,7 +387,7 @@ td,th{padding: 0;}
     width: calc(100% - 16px);
     height: calc(100% - 16px);
     background-color: #fff;
-    background-image: url(../assets/img/violet3.jpg);
+    background-image: url(violet3.jpg);
     background-size: cover;
     background-position: top center;
     z-index: 2;
@@ -445,7 +445,7 @@ td,th{padding: 0;}
     z-index: 1;
     transform: rotateY(180deg) translateZ(1px);
     background-color: #fff;
-    background-image: url(../assets/img/letter.jpg);
+    background-image: url(letter.jpg);
 }
 .letter-page .letter .letter-b .letter-body{
     position: relative;

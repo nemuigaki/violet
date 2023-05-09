@@ -57,14 +57,14 @@ td,th{padding:0}
 .letter-page{overflow:hidden;cursor:move;-webkit-user-select:none;user-select:none}
 .letter-page>.z{position:absolute;top:0;left:0;width:100%;height:100%;perspective:900px;-webkit-perspective:900px}
 .letter-page .letter{position:absolute;top:50%;left:50%;width:50vw;height:25vw;margin:-12.5vw -25vw;background-color:#fff;opacity:1;border-radius:4px;transform:rotateX(0) rotateY(0);box-shadow:0 0 100px rgba(100,100,100,.5);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;z-index:10;animation:routers 5s;-webkit-animation:-webkit-routers 5s;animation-iteration-count:infinite;-webkit-animation-iteration-count:infinite;animation-timing-function:linear;-webkit-animation-timing-function:linear}
-.letter-page .letter .letter-a{position:absolute;top:8px;left:8px;overflow:hidden;border-radius:2px;width:calc(100% - 16px);height:calc(100% - 16px);background-color:#fff;background-image:url(../assets/img/violet3.jpg);background-size:cover;background-position:top center;z-index:2}
+.letter-page .letter .letter-a{position:absolute;top:8px;left:8px;overflow:hidden;border-radius:2px;width:calc(100% - 16px);height:calc(100% - 16px);background-color:#fff;background-image:url(violet3.jpg);background-size:cover;background-position:top center;z-index:2}
 .letter-page .letter .f1{position:absolute;width:15%;right:8.5%;top:60%;transform:translateZ(15px)}
 .letter-page .letter .k1{position:absolute;width:25%;right:25%;top:12%;transform:translateZ(20px)}
 .letter-page .letter .k2{position:absolute;width:40%;right:12%;bottom:15%;transform:translateZ(15px)}
 .letter-page .letter .k3{position:absolute;width:20%;right:10%;bottom:10%;transform:translateZ(10px)}
 .letter-page .letter .k4{position:absolute;width:13%;left:5%;bottom:10%;transform:translateZ(15px)}
 .letter-page .letter .k5{position:absolute;width:12%;left:2%;bottom:10%;transform:translateZ(10px)}
-.letter-page .letter .letter-b{position:absolute;box-sizing:border-box;padding:16px;top:0;left:0;width:100%;height:100%;z-index:1;transform:rotateY(180deg) translateZ(1px);background-color:#fff;background-image:url(../assets/img/letter.jpg)}
+.letter-page .letter .letter-b{position:absolute;box-sizing:border-box;padding:16px;top:0;left:0;width:100%;height:100%;z-index:1;transform:rotateY(180deg) translateZ(1px);background-color:#fff;background-image:url(letter.jpg)}
 .letter-page .letter .letter-b .letter-body{position:relative;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box;padding:16px;border-top:solid 1px #90cee3;border-bottom:solid 1px #90cee3;height:100%;font-size:14px;color:#666}
 .letter-page .letter .letter-b .letter-body .info{text-align:center;letter-spacing:2px}
 .letter-page .letter .letter-b .letter-body .sender{text-align:right}
